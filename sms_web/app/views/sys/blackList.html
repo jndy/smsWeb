@@ -1,0 +1,44 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+    <div class="mb-10 clearfix">
+        <a href="javascript:;" class="btn-gray" ng-click="deleteSelected()"><i class="i-del"></i>删除选中</a>
+        <span class="filter-btn">
+            <a href="javascript:;" class="btn-lblue" ng-click="exportData()">导出</a>
+        </span>  
+        <div class="search">
+            <input type="text" ng-model="searchKey" placeholder="搜索手机号码"/>
+            <a href="javascript:;"><i class="i-search"></i></a>
+        </div>
+    </div>
+    <div class="msg-table">
+        <div class="table-tit clearfix">
+            <div class="col"><span><input type="checkbox" name="chkAll" ng-model="chkAll2" ng-click="checkAll(chkAll2, '2')" />移动[{{mobileList.length}}]</span></div>
+            <div class="col"><span><input type="checkbox" name="chkAll" ng-model="chkAll1" ng-click="checkAll(chkAll1, '1')" />联通[{{unicomList.length}}]</span></div>
+            <div class="col col3"><span><input type="checkbox" name="chkAll" ng-model="chkAll3" ng-click="checkAll(chkAll3, '3')" />电信[{{telecomList.length}}]</span></div>
+        </div>
+        <div class="table-con" id="table-con-div">
+            <div class="col">
+                <p ng-repeat="item in mobileList track by $index" ng-class="isSearchResult(item);"><input type="checkbox" name="chkMobile" ng-model="$index" ng-change="ckbChange($index, item, '2')" ng-checked="allMobileCheck"/>{{item.phone}}</p>                 
+            </div>
+            <div class="col">
+                <p ng-repeat="item in unicomList track by $index" ng-class="isSearchResult(item);"><input type="checkbox" name="chkUnicom" ng-model="$index" ng-change="ckbChange($index, item, '1')" ng-checked="allUnicomCheck"/>{{item.phone}}</p>
+            </div>
+            <div class="col col3">
+                <p ng-repeat="item in telecomList track by $index" ng-class="isSearchResult(item);"><input type="checkbox" name="chkTelecom" ng-model="$index" ng-change="ckbChange($index, item, '3')" ng-checked="allTelecomCheck" />{{item.phone}}</p>  
+            </div>
+        </div>
+
+    </div>
+    <div class="msg-fun">
+        <div class="msg-addr tr">
+            <input type="text" id="addMobile" ng-model="addMobile" maxlength="11" placeholder="手机号码" class="msg-addr-phone"/>
+            <button class="btn-dblue" ng-disabled="addMobile == ''" ng-click="btnAddSingle();" id="btnSingle">添加</button>
+            <button id="btnUpFile" onclick="return $('#uploadFile').click();" class="btn-dblue ml-5">导入</button>
+            <input class="hide" name="uploadFile" id="uploadFile" type="file" value="浏览" />
+        </div>
+        <div class="msg-model">
+            <a href="/smsApi/downloadBlackTemplate.do?sid={{sid}}">下载导入模板</a>
+        </div>
+    </div>
+</div>

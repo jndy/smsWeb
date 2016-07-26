@@ -1,0 +1,9 @@
+<div class="msg-down">
+    <span>彩信<i class="i-cx"></i></span>
+</div>
+<ul class="sitenav clearfix">
+    <li has-permission='MMS_SENT' ng-class="{current: navCurrent == 'sentMMS'}"><a href="#/mms/sentMMS">写信</a></li>
+    <li has-permission='MMS_RECEIVE' ng-class="{current: navCurrent == 'mmsReceive'}"><a href="#/mms/mmsReceive">收信</a></li>
+    <li has-permission='MMS_SENT' ng-class="{current: navCurrent == 'mmsDrafts'}"><a href="#/mms/mmsDrafts">草稿箱</a></li>
+    <li has-permission='MMS_SENT_RECORD' ng-class="{current: navCurrent == 'mmsRecord'}"><a href="#/mms/mmsRecord">发送记录</a></li>
+</ul>

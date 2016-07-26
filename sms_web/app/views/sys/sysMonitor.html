@@ -1,0 +1,77 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+    <div class="filter-tab">
+        <div class="mb-10 clearfix">
+            <div class="filter-attr clearfix">
+                <div select-custom="" ng-model="selectYears" select-title="选择年份" select-items="yearsList"></div>
+                <div select-custom="" ng-model="selectMonth" select-title="选择月份" select-items="monthList" class="ml-10"></div>
+                <button class="btn-dblue ml-10" ng-click="searchData()">查询</button>
+            </div>
+            <span class="filter-btn">
+                <!-- <a href="javascript:;" class="btn-lblue" ng-click="exportData()">导出</a> -->
+            </span>
+        </div>
+    </div>
+    <div id="SmsChart" style="width:600px; height:400px;" has-permission='MONITORING_SMS'></div>
+
+    <div has-permission='MONITORING_SERVICE'>
+        <div class="area-monitor">
+            <span class="name">服务器基本信息：</span><span>Apache tomcat 7</span>
+        </div>
+        <div class="area-monitor">
+            <span class="name">WEB应用信息：</span><span>SMS（短信平台）：</span><span string-html="monitorData.smsState | serviceState"></span>
+            <span class="ml-20">SMS-WS（商务平台服务接口）：</span><span string-html="monitorData.smsWsState | serviceState"></span>
+        </div>
+        <div class="area-monitor">
+            <span class="name">网关进程：</span>
+            <table class="filter-main">
+                <tr>
+                    <th>运营商</th>
+                    <th>响应时间（S）</th>
+                </tr>
+                <tr>
+                    <td>移动</td>
+                    <td>{{monitorData.mobileGatewayTime}}s</td>
+                </tr>
+                <tr>
+                    <td>联通</td>
+                    <td>{{monitorData.unicomGatewayTime}}s</td>
+                </tr>
+                <tr>
+                    <td>电信</td>
+                    <td>{{monitorData.telcomGatewayTime}}s</td>
+                </tr>
+            </table>
+        </div>
+        <div class="area-monitor">
+            <span class="name">进程组信息：</span><span>Apache tomcat (pid)：</span><input type="text" placeholder="此处为参数" class="monitop-input" value="{{monitorData.tomcatPid}}" disabled />
+        </div>
+        <div class="area-monitor">
+            <span class="name">运营商网关状况信息：</span>
+            <table class="filter-main">
+                <tr>
+                    <th>运营商</th>
+                    <th>状态</th>
+                </tr>
+                <tr>
+                    <td>移动</td>
+                    <td string-html="monitorData.mobileState | serviceState"></td>
+                </tr>
+                <tr>
+                    <td>联通</td>
+                    <td string-html="monitorData.unicomState | serviceState"></td>
+                </tr>
+                <tr>
+                    <td>电信</td>
+                    <td string-html="monitorData.telcomState | serviceState"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div has-permission='MONITORING_DATA'>
+        <div class="area-monitor">
+            <span class="name">数据库基本信息：</span><span>MySQL</span>
+        </div>
+    </div>
+</div>

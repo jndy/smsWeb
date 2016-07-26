@@ -1,0 +1,89 @@
+
+
+
+<div class="page-index">
+    <div class="name"><span string-html="userRealName"></span>您好，欢迎使用南网短信平台！</div>
+    <div class="mb-20 clearfix">
+        <div class="box box-icon">
+            <ul>
+                <li has-permission='SMS_MANAGEMENT'><a href="#/sms/sentSMS"><i class="i-msg"></i>短信管理</a></li>
+                <li has-permission='CONTACT_MANAGEMENT'><a href="#/addr/contactList"><i class="i-addr"></i>通讯录</a></li>
+                <li has-permission='DATA_MANAGEMENT'><a href="#/data/statistics"><i class="i-data"></i>数据统计</a></li>
+                <li has-permission='SYS_MANAGEMENT'><a href="#/sys/userInfo"><i class="i-system"></i>系统管理</a></li>
+            </ul>
+        </div>
+        <div class="box box-txt">
+            <h3>系统版本</h3>
+            <p>当前版本：V1.0.0</p>
+            <p>历史版本：V1.0.0</p>           
+        </div>
+        
+    </div>
+    <div class="clearfix">
+        <div class="box box-list">
+            <h3>公告</h3>
+            <ul has-permission='NOTICE_MANAGEMENT_VIEW'>
+                <li ng-repeat="item in noticeList track by $index"><a href="javascript:;" ng-click="showNotice(item);"><span class="time">{{item.createTime | dateFormat}}</span><span class="title" title="{{item.noticeTitle}}" string-html="item.noticeTitle | homeTitle"></span><span class="more">[查看]</span></a></li>
+                <li ng-if="noticeList.length == 0"><span>暂无公告信息！</span></li>
+            </ul>
+        </div>
+        <div class="box box-txt ht200">
+            <h3>使用情况</h3>
+            <div has-permission='HOME_SMS_COUNT'>
+              
+                <div class="ct-left">
+                  <p>短信：<br/>
+                  已发<span>{{SmsMmsData.smsUsage}}</span>条<br/>
+                  剩余<span>{{SmsMmsData.smsRemain}}</span>条<br/>
+                  待发送<span>{{SmsMmsData.smsWaitSend}}</span>条</p>
+                </div>
+                <div class="ct-right">
+                  <p>彩信：<br/>
+                  已发<span>{{SmsMmsData.mmsUsage}}</span>条<br/>
+                  剩余<span>{{SmsMmsData.mmsRemain}}</span>条<br/>
+                  待发送<span>{{SmsMmsData.mmsWaitSend}}</span>条</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal 查看公告 -->
+<div id="viewModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">  
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="viewModalLabel">查看公告</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert-bd">
+           <ul>            
+               <li class="clearfix text-center">
+                  <h2 string-html="noticeTitle"></h2>
+               </li>               
+               <li class="clearfix" string-html="noticeContent">                  
+               </li> 
+               <li class="clearfix text-right">
+                  {{createTime | timeFormat}}&nbsp;&nbsp;| 【{{creator}}】
+               </li>              
+           </ul>
+        </div>   
+    </div>
+    <div class="modal-footer">
+      <button class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div> 
+</div>
+<!-- Modal 查看公告 End-->
+
+<script type="text/javascript">
+/*重置页面高度*/
+var resizePage = function(){
+    var sidebarH = $(".sidebar").height();
+    $(".content").height(sidebarH-80);
+    $(".page-index").height(sidebarH-80-72);
+}
+resizePage();
+window.onresize = function(){
+    resizePage();
+}
+</script>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>中国南方电网短信平台-系统管理</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <!-- header [[ -->
+    <div class="header clearfix">
+        <h1 class="logo"></h1>
+        <div class="header-info">
+            <span>登录用户：</span><span>黄茜茜</span>
+            <a href="" class="btn-logout">注销</a>
+        </div>
+    </div>
+    <!-- header ]] -->
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li><a href="">首页</a></li>
+                <li><a href="">短信管理</a></li>
+                <li><a href="">彩信管理</a></li>
+                <li><a href="">通讯录</a></li>
+                <li><a href="">数据统计</a></li>
+                <li class="current"><a href="">系统管理</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="page-msg">
+                <ul class="sitenav sitenav-sys clearfix">
+                    <li><a href="">用户管理</a></li>
+                    <li><a href="">角色权限</a></li>
+                    <li><a href="">任务管理</a></li>
+                    <li><a href="">个人管理</a></li>
+                    <li><a href="">日志管理</a></li>
+                    <li><a href="">系统配置</a></li>
+                    <li><a href="">公告管理</a></li>
+                    <li><a href="">通道管理</a></li>
+                    <li class="current"><a href="">黑名单</a></li>
+                </ul>
+                <div class="container">
+                    <div class="area-monitor">
+                        <span class="name">服务器基本信息：</span><span>Apache tomcat 7</span>
+                    </div>
+                    <div class="area-monitor">
+                        <span class="name">WEB应用信息：</span><span>SMS（短信平台）：</span><span class="c-blue">正常</span>
+                        <span>SMS-WS（商务平台服务接口）：</span><span class="c-blue">正常</span>
+                    </div>
+                    <div class="area-monitor">
+                        <span class="name">网关进程：</span>
+                        <table class="filter-main">
+                            <tr>
+                                <th>运营商</th>
+                                <th>响应时间（S）</th>
+                            </tr>
+                            <tr>
+                                <td>移动</td>
+                                <td>0.1</td>
+                            </tr>
+                            <tr>
+                                <td>联通</td>
+                                <td>0.2</td>
+                            </tr>
+                            <tr>
+                                <td>电信</td>
+                                <td>0.1</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="area-monitor">
+                        <span class="name">进程组信息：</span><span>Apache tomcat (pid)：</span><input type="text" placeholder="此处为参数" class="monitop-input">
+                    </div>
+                    <div class="area-monitor">
+                        <span class="name">营商网关状况信息：</span>
+                        <table class="filter-main">
+                            <tr>
+                                <th>运营商</th>
+                                <th>状态</th>
+                            </tr>
+                            <tr>
+                                <td>移动</td>
+                                <td>正常</td>
+                            </tr>
+                            <tr>
+                                <td>联通</td>
+                                <td>正常</td>
+                            </tr>
+                            <tr>
+                                <td>电信</td>
+                                <td><span class="c-red">服务不可用</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

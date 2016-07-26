@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>中国南方电网短信平台</title>
+    <meta name="description" content="中国南方电网短信平台">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!-- build:css(.tmp) styles/login.css -->
+    <link rel="stylesheet" href="styles/login.css"/>
+    <!-- endbuild -->
+    <!-- build:js(.) scripts/lg-base.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery-cookie/src/jquery.cookie.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+</head>
+<body>
+    <div class="header-login clearfix">
+        <div class="layout">
+            <h1 class="logo"></h1>
+        </div>
+    </div>
+    <div class="main">
+        <div class="main-bd">
+            <div class="login-pic"></div>
+            <div class="login">
+                <!-- 登录功能 [[ -->
+                <h2>用户登录</h2>
+                <form name="login_form">
+                <div class="login-contents">
+                    <!-- 报错提示 -->
+                    <div class="login-tips">
+                        <!-- span 加上class"hide" 隐藏 -->
+                        <span id="loginTips" style="display:none;"><i class="ico-tip"></i>用户名或密码错误</span>
+                    </div>
+                    <div class="login-content">
+                        <div class="in-text">
+                            <span><i class="i-user"></i></span>
+                            <input type="text" name="userName" id="userName" placeholder="帐号"/>
+                        </div>
+                        <div class="in-text">
+                            <span><i class="i-psw"></i></span>
+                            <input type="password" name="userPwd" id="userPwd" placeholder="密码"/>
+                        </div>
+
+                        <label name="remember" class="in-check">
+                            <input type="checkbox" name="rememberUser" id="rememberUser" />记住我</label>
+                        <a href="javascript:;" onclick="Login.userLogin();" class="btn-login">登录</a>
+                    </div>
+                </div>
+                </form>
+                <!-- 登录功能 ]] -->
+            </div>
+        </div>
+    </div>
+    <div class="login-footer">中国南方电网版权所有</div>
+
+    <!-- build:js({.tmp,app}) scripts/lg-login.js -->
+    <script src="scripts/common/security.js"></script>
+    <script src="scripts/login/login.js"></script>
+    <!-- endbuild -->
+    
+    <script type="text/javascript">
+    var webpath = "/" || "/smsWeb";
+    var isEncryptPwd = "0";
+    var cfgAuthMd5 = "0";
+    var opt = {  
+        form:"login_form",
+        username:"userName",
+        userpwd:"userPwd",
+        remember:"rememberUser",
+        errorTip:"loginTips"       
+    };
+    
+    var reg = {
+        userid: /^[0-9a-zA-Z]([0-9a-zA-Z._\-]{1,19})$/,
+        domain: /^([A-Z0-9a-z-]+\.)+[A-Za-z]{2,5}$/ig,
+        email: /^[A-Za-z0-9._%+-]{1,60}@([A-Z0-9a-z-]+\.)+[A-Za-z]{2,5}$/ig,
+        mobile: /^((\+86)|(86))?((13[0-9])|(15[0-9])|(18[0-9])|(14[0-9]))\d{8}$/ig
+    };
+    var len = {
+        userid_min: 2,
+        userid_max: 20,
+        password_min: 4,
+        password_max: 30
+    };
+    // 初始登录脚本
+    Login.init(opt,reg,len);       
+    </script>
+</body>
+</html>

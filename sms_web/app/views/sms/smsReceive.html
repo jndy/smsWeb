@@ -1,0 +1,48 @@
+<div ng-include="'views/sms/smsNav.html'"></div>
+<div class="container">
+    <div class="filter-tab">
+        <div class="mb-10 clearfix">
+            <div class="filter-attr clearfix">
+                <div class="filter-choose">
+                    <span class="filter-txt" id="startDate">{{startDate}}</span>
+                    <a href="javascript:;" class="btn-down" ng-click="startDateChoose()"><i class="i-down"></i></a>
+                </div>
+                <span class="filter-block">至</span>
+                <div class="filter-choose">
+                    <span class="filter-txt" id="endDate">{{endDate}}</span>
+                    <a href="javascript:;" class="btn-down" ng-click="endDateChoose()"><i class="i-down"></i></a>
+                </div>
+                <input type="text" placeholder="手机号码" ng-model="phoneNum" class="filter-input hide"/>
+                <input type="text" placeholder="短信内容" ng-model="keyWord" class="filter-input ml-5 hide" />
+                <button class="btn-dblue ml-5" ng-click="searchData()">查询</button>
+            </div>
+            <span class="filter-btn">
+                <a href="javascript:;" class="btn-lblue" ng-click="exportData()">导出</a>
+            </span>           
+        </div>
+    </div>
+    <div class="">
+        <table class="filter-main table-hover">
+            <tr>
+                <th>序号</th>
+                <th>上行短号</th>
+                <th>短信内容</th>
+                <th>回复手机</th>
+                <th>回复时间</th>
+                <th>回复内容</th>
+            </tr>
+            <tr ng-repeat="item in receiveList track by $index">
+                <td>{{$index+1}}</td>
+                <td>{{item.srcno}}</td>
+                <td><div class="td-over" string-html="item.content"></div></td>
+                <td>{{item.smsSender}}</td>
+                <td><div class="td-nowrap">{{item.createTime | timeFormat}}</div></td>
+                <td>{{item.replyContent}}</td>
+            </tr>
+            <tr ng-if="receiveList.length == 0">
+              <td colspan="6">暂无数据！</td>   
+            </tr>
+        </table>
+        <div angular-pagination="" conf="paginationConf"></div>
+    </div>
+</div>

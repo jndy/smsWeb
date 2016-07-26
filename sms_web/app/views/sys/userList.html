@@ -1,0 +1,206 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+    <div class="mb-10 clearfix sys-cont">
+        <div select-custom="" ng-model="selectCompany" select-title="=所属公司=" select-items="companyList" ng-show="isSuperAdmin" ng-change="companyChange(selectCompany)" class="wd-120 mr-10"></div>
+        <div select-custom="" ng-model="selectRole" select-title="=用户角色=" select-items="roleList" class="mr-10 wd-150"></div>        
+        <div class="search">
+            <input type="text" placeholder="账号或手机号码" ng-model="keyWord" id="keyWord" />
+            <a href="javascript:;" ng-click="searchData();"><i class="i-search"></i></a>
+        </div>
+        <a href="javascript:;" class="btn-dblue" ng-click="addUser();">创建用户</a>
+    </div>
+    <table class="filter-main table-hover">
+        <tr>
+          <th>编号</th>
+          <th>所属公司</th>
+          <th>用户角色</th>
+          <th>账号</th>
+          <th>真实姓名</th>
+          <th>手机号</th>
+          <th>创建时间</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+        <tr ng-repeat="item in userList">
+          <td>{{item.userId}}</td>
+          <td>{{item.companyName}}</td>
+          <td>{{item.roleName}}</td>
+          <td>{{item.userName}}</td>
+          <td string-html="item.userRealName"></td>
+          <td>{{item.phone}}</td>
+          <td><div class="td-nowrap">{{item.createTime | timeFormat}}</div></td>
+          <td class="wd-30">{{item.userStatus | statusFormat}}</td>
+          <td><div class="td-nowrap" ng-show="checkPermission(item)">
+            <a href="javascript:;" ng-click="changeUser(item)">{{item.userStatus | statusOPFormat}}</a>
+            <a href="javascript:;" ng-click="editUser(item, '1')" class="set-fun"><i class="i-edit"></i>修改</a>
+            <a href="javascript:;" ng-click="editUser(item, '2')" class="set-fun"><i class="i-lock"></i>修改密码</a>
+            <a href="javascript:;" ng-click="delUser(item)" class="set-fun"><i class="i-del1"></i>删除</a></div></td>
+        </tr>
+        <tr ng-if="userList.length == 0">
+          <td colspan="7">暂无数据！</td>   
+        </tr>
+    </table>
+    <div angular-pagination="" conf="paginationConf"></div>
+</div>    
+
+
+<!-- Modal 添加用户 -->
+<div id="addModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">  
+  <form name="addForm" ng-submit="submitAddForm(addForm.$valid, addFormData)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="addModalLabel">{{modelName}}</h3>
+    </div>
+    <div class="modal-body">      
+        <div class="alert-bd create-user">
+           <ul>
+               <li class="clearfix" ng-show="isSuperAdmin">
+                   <label class="alert-bd-label">所属公司：</label>
+                   <div class="label-con">
+                      <div ng-show="isSuperAdmin" select-custom="" ng-model="addCompany" select-title="=所属公司=" select-items="companyListForm" ng-change="companyChange(addCompany)" form-validation="emptySC"></div>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
+                   <div class="label-con">
+                      <div select-custom="" ng-model="addRole" select-title="=用户角色=" select-items="roleListForm" form-validation="emptySC"></div>
+                   </div>
+               </li>               
+               <li class="clearfix">
+                   <label class="alert-bd-label">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+                   <div class="label-con">
+                       <input type="text" name="userName" ng-model="addFormData.userName" class="input" ng-minlength="4" is-unique form-validation="empty user"/>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">真实姓名：</label>
+                   <div class="label-con">
+                       <input type="text" name="userRealName" ng-model="addFormData.userRealName" class="input" form-validation="empty name"/>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+                   <div class="label-con">
+                       <input type="text" name="phone" ng-model="addFormData.phone" class="input" form-validation="empty mobile"/>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                   <div class="label-con">
+                       <input type="password" name="userPwd" id="userPwdAdd" ng-model="addFormData.userPwd" class="input" pwd-check="2" form-validation="empty"/>                      
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">确认密码：</label>
+                   <div class="label-con">
+                       <input type="password" name="userPwdAgain" ng-model="addFormData.userPwdAgain" class="input" cppw-check="userPwdAdd" form-validation="empty"/>
+                   </div>
+               </li>
+           </ul>
+        </div>   
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="addForm.$invalid">保存</button>
+    </div> 
+  </form>   
+</div>
+<!-- Modal 添加用户 End-->
+
+<!-- Modal 修改资料 -->
+<div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">  
+  <form name="editForm" ng-submit="submitEditForm(editForm.$valid, editFormData, editUserType)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="editModalLabel">{{editModelName}}</h3>
+    </div>
+    <div class="modal-body">      
+        <div class="alert-bd create-user">
+           <ul>   
+               <li class="clearfix">
+                   <label class="alert-bd-label">编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+                   <div class="label-con">
+                       <input type="text" name="userId" ng-model="editFormData.userId" class="input" disabled="disabled" />                       
+                   </div>
+               </li>
+               <li class="clearfix" ng-show="isSuperAdmin">
+                   <label class="alert-bd-label">所属公司：</label>
+                   <div class="label-con">
+                      <div select-custom="" ng-show="isSuperAdmin" ng-model="editCompany" select-title="=所属公司=" select-items="companyListForm" ng-change="companyChange(editCompany)" form-validation="emptySC"></div>
+                   </div>
+               </li> 
+               <li class="clearfix">
+                   <label class="alert-bd-label">角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
+                   <div class="label-con">
+                      <div select-custom="" ng-model="editRole" select-title="=用户角色=" select-items="roleListForm" form-validation="emptySC"></div>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+                   <div class="label-con"> 
+                       <input type="text" name="userName" ng-model="editFormData.userName" class="input" ng-minlength="4" is-unique user-id="{{editFormData.userId}}" form-validation="empty user"/>                    
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">真实姓名：</label>
+                   <div class="label-con">
+                       <input type="text" name="userRealName" ng-model="editFormData.userRealName" class="input" form-validation="empty name"/>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+                   <div class="label-con">
+                       <input type="text" name="phone" ng-model="editFormData.phone" class="input" form-validation="empty mobile"/>
+                   </div>
+               </li>
+           </ul>
+        </div>   
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="editForm.$invalid">保存</button>
+    </div> 
+  </form>   
+</div>
+<!-- Modal 修改资料 End-->
+
+<!-- Modal 修改密码 -->
+<div id="pwdModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel" aria-hidden="true">  
+  <form name="pwdForm" ng-submit="submitEditForm(pwdForm.$valid, pwdFormData, editUserType)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="pwdModalLabel">{{editModelName}}</h3>
+    </div>
+    <div class="modal-body">      
+        <div class="alert-bd create-user">
+           <ul>            
+               <li class="clearfix">
+                   <label class="alert-bd-label">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+                   <div class="label-con">
+                       <input type="hidden" name="userId" ng-model="pwdFormData.userId" /> 
+                       <input type="text" name="userName" ng-model="pwdFormData.userName" class="input" disabled="disabled" />                       
+                   </div>
+               </li>               
+               <li class="clearfix">
+                   <label class="alert-bd-label">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                   <div class="label-con">
+                       <input type="password" name="userPwd" id="userPwdEdit" ng-model="pwdFormData.userPwd" class="input" pwd-check="2" form-validation="empty" maxlength="30"/>
+                   </div>
+               </li>
+               <li class="clearfix">
+                   <label class="alert-bd-label">确认密码：</label>
+                   <div class="label-con">
+                       <input type="password" name="userPwdAgain" ng-model="pwdFormData.userPwdAgain" class="input" cppw-check="userPwdEdit" form-validation="empty"/>
+                   </div>
+               </li>
+           </ul>
+        </div>   
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="pwdForm.$invalid">保存</button>
+    </div> 
+  </form>   
+</div>
+<!-- Modal 修改密码 End-->

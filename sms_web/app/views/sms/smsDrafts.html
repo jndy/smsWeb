@@ -1,0 +1,52 @@
+<div ng-include="'views/sms/smsNav.html'"></div>
+
+<div class="container">
+    <div class="filter-tab">
+        <div class="mb-10 clearfix">
+            <div class="filter-attr clearfix">
+                <div class="filter-choose">
+                    <span class="filter-txt" id="startDate">{{startDate}}</span>
+                    <a href="javascript:;" class="btn-down" ng-click="startDateChoose()"><i class="i-down"></i></a>
+                </div>
+                <span class="filter-block">至</span>
+                <div class="filter-choose">
+                    <span class="filter-txt" id="endDate">{{endDate}}</span>
+                    <a href="javascript:;" class="btn-down" ng-click="endDateChoose()"><i class="i-down"></i></a>
+                </div>
+                <input type="text" placeholder="短信内容" ng-model="keyWord" class="filter-input filter-input-long hide"/>
+                <button class="btn-dblue ml-5" ng-click="searchData()">查询</button>
+            </div>
+            <span class="filter-btn">
+                <a href="javascript:;" class="btn-lblue" ng-click="exportData()">导出</a>
+            </span>
+        </div>
+
+    </div>
+    <div class="">
+        <table class="filter-main table-hover">
+            <tr>
+                <th>序号</th>
+                <th>短信内容</th>
+                <th>添加人数</th>
+                <th>存稿时间</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="item in draftsList track by $index">
+                <td>{{$index+1}}</td>
+                <td><div class="td-over" string-html="item.content"></div></td>
+                <td>{{item.userCount}}</td>
+                <td><div class="td-nowrap">{{item.createTime | timeFormat}}</div></td>
+                <td><div class="td-nowrap">
+                    <a href="#/sms/sentSMS/drafts/{{item.contentUuid}}" class="set-fun"><i class="i-edit"></i>编辑</a>
+                    <a href="javascript:;" ng-click="deleteDrafts(item)" class="set-fun ml-5"><i class="i-del1"></i>删除</a>
+                    <a href="javascript:;" ng-click="sentDrafts(item)" class="set-fun ml-5"><i class="i-again"></i>发送</a>
+                </div></td>
+            </tr>
+            <tr ng-if="draftsList.length == 0">
+              <td colspan="5">暂无数据！</td>   
+            </tr>
+        </table>
+        <div angular-pagination="" conf="paginationConf"></div>
+    </div>
+</div>
+            

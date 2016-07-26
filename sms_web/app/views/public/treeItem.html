@@ -1,0 +1,8 @@
+<li ng-repeat="item in groupList" class="ml-10">
+    <a href="javascript:;" ng-init="item.show=false" ng-click="item.show=!item.show"><i ng-class="item.show ? 'i-dot-down' : 'i-dot-right'"></i>{{item.groupName}}</a>
+    <ul ng-include="'./views/public/treeItem.html'" ng-init="groupList=item.group_list;userList=item.user_list;level=item.level;" ng-show="item.show"></ul>
+</ul>
+</li>
+<li ng-repeat="user in userList" class="ml-10">
+    <a href="javascript:;" ng-click="selectItem(user)" string-html="user.u_name"></a>
+</li>

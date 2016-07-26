@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>中国南方电网短信平台-创建用户</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/mod-pop.css"/>
+</head>
+<body>
+   <!-- 新增联系人 -->
+   <div class="alert-bd create-user">
+       <ul>
+           <li class="clearfix">
+               <label class="alert-bd-label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+               <div class="label-con">
+                   <input type="text" placeholder="" class="input"/>
+               </div>
+           </li>
+           <li class="clearfix">
+               <label class="alert-bd-label">手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+               <div class="label-con">
+                   <input type="text" placeholder="" class="input"/>
+               </div>
+           </li>
+           <li class="clearfix">
+               <label class="alert-bd-label">部门/群组：</label>
+               <div class="label-con">
+                   <div class="filter-choose">
+                       <span class="filter-txt">组织部</span>
+                       <a href="javascript:;" class="btn-down"><i class="i-down"></i></a>
+                   </div>
+                   <span class="ml-5"><i class="i-open"></i></span>
+               </div>
+           </li>
+           <li class="clearfix">
+               <label class="alert-bd-label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
+               <div class="label-con">
+                   <label for="" class="check-radio"><input type="radio"/>男</label>
+                   <label for="" class="check-radio"><input type="radio"/>女</label>
+               </div>
+           </li>
+       </ul>
+       <div class="alert-btn alert-user-btn">
+           <a href="" class="btn-dblue">保存</a><a href="" class="btn-lblue ml-10">取消</a>
+       </div>
+   </div>
+
+
+   <!---- 分隔线 -->
+   <div class="mt-10 mb-10" style="height: 30px;"></div>
+   <!---- 分隔线 -->
+
+   <!-- 导入联系人 -->
+   <div class="alert-bd create-user">
+       <div class="addr-alert-info">
+           <p>导入文件（xls格式，第一列姓名，第二列手机号码，第三列性别）</p>
+           <div><a href="" class="btn-green">选择文件</a><span>组织部联系人名单.xls</span><span class="error"><i class="i-result-no"></i>上传不成功，请重新上传</span></div>
+       </div>
+       <ul>
+           <li class="clearfix">
+               <label class="alert-bd-label">部门/群组：</label>
+               <div class="label-con">
+                   <div class="filter-choose">
+                       <span class="filter-txt">组织部</span>
+                       <a href="javascript:;" class="btn-down"><i class="i-down"></i></a>
+                   </div>
+                   <span class="ml-5"><i class="i-open"></i></span>
+               </div>
+           </li>
+       </ul>
+       <div class="alert-btn alert-user-btn">
+           <a href="" class="btn-dblue">保存</a><a href="" class="btn-lblue ml-10">取消</a>
+       </div>
+   </div>
+
+
+   <!---- 分隔线 -->
+   <div class="mt-10 mb-10" style="height: 30px;"></div>
+   <!---- 分隔线 -->
+
+
+   <!-- 群组管理 -->
+   <div class="alert-bd create-user">
+       <ul>
+           <li class="clearfix">
+               <label class="alert-bd-label">群组名称：</label>
+               <div class="label-con">
+                   <input type="text" placeholder="" class="input"/>
+               </div>
+               <span class="alert-icon"><i class="i-result-yes"></i></span>
+               <span class="alert-icon error"><i class="i-result-no"></i>已创建</span>
+           </li>
+
+       </ul>
+       <div class="alert-btn alert-user-btn">
+           <a href="" class="btn-dblue">保存</a><a href="" class="btn-lblue ml-10">取消</a>
+       </div>
+   </div>
+
+
+   <button class="btn-dblue">保存</button>
+   <button disabled="">保存</button>
+
+</body>
+</html>

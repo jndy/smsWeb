@@ -1,0 +1,86 @@
+<div ng-include="'views/sms/smsNav.html'"></div>
+
+<div class="container">
+    <div class="mb-10 clearfix">
+        <div class="filter-attr clearfix">
+            <input type="text" placeholder="短信模板标题或内容" ng-model="keyWord" class="filter-input filter-input-long ml-0" />
+            <button class="btn-dblue" ng-click="searchData()">查询</button>
+        </div>
+        <span class="filter-btn">
+            <a href="javascript:;" class="btn-dblue" ng-click="editTemplate();"><i class="i-add mr-5"></i>新增模板</a>
+        </span>           
+    </div>
+    <div class="">
+        <table class="filter-main table-hover">
+            <tr>
+                <th>序号</th>
+                <th>模板名称</th>
+                <th>短信模板内容</th>
+                <th>创建人</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="item in templateList track by $index">
+                <td>{{$index+1}}</td>
+                <td string-html="item.tempName"></td>
+                <td><div class="td-over" string-html="item.tempContent"></div></td>
+                <td>{{item.creator}}</td>
+                <td><div class="td-nowrap">{{item.createTime | timeFormat}}</div></td>
+                <td><div class="td-nowrap">
+                  <a href="javascript:;" class="set-fun" ng-click="editTemplate(item);"><i class="i-edit"></i>编辑</a>
+                  <a href="javascript:;" class="set-fun ml-5" ng-click="delTemplate(item);"><i class="i-del1"></i>删除</a>
+                </div></td>
+            </tr>
+            <tr ng-if="templateList.length == 0">
+              <td colspan="6">暂无数据！</td>   
+            </tr>
+        </table>
+        <div angular-pagination="" conf="paginationConf"></div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <form name="editForm" ng-submit="submitForm(editForm.$valid, formData, editType)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="editModalLabel">{{(editType == "add")? "新增" : "修改"}}模板</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+         <ul>
+             <li class="clearfix">
+                 <label class="alert-bd-label">名称：</label>
+                 <div class="label-con">
+                    <input type="hidden" ng-model="formData.tempId" />
+                    <input type="text" placeholder="" class="input" ng-model="formData.tempName" form-validation="empty"/>
+                 </div>
+             </li>
+             <li class="clearfix">
+                 <label class="alert-bd-label">内容：</label>
+                 <div class="label-con">
+                     <textarea cols="30" rows="10" class="textarea" placeholder="单条短信内容长度为70字" ng-model="formData.tempContent" form-validation="empty"></textarea>                     
+                 </div>
+             </li>
+             <li class="clearfix">
+                 <label class="alert-bd-label">标签：</label>
+                 <div class="label-con">
+                     <span ng-repeat="tag in tagsList" ng-click="selectTag(tag)" class="btn btn-mini ml-5">{{tag.tagName}}</span>
+                 </div>
+             </li>
+             <li class="clearfix">
+                 <label class="alert-bd-label">签名：</label>
+                 <div class="label-con">
+                     <input type="text" placeholder="" class="input" ng-model="formData.tempSignature"/>
+                 </div>
+             </li>
+         </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="editForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>

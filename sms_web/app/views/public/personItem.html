@@ -1,0 +1,9 @@
+<li ng-repeat="item in groupList" ng-class="isOrgCurrent(item, addrType);">
+    <a href="javascript:;" ng-init="item.show=false;item.level=comlevel;" ng-click="itemClick(item, addrType);" ng-class="'pl-'+item.level">
+    	<i ng-class="item.show ? 'i-dot-down' : 'i-dot-right'"></i>
+    	<span>{{item.groupName}}({{item.userCount}})</span>
+    	<i class="i-del1" ng-click="delOrg(item, addrType, $event);" ng-hide="item.groupName=='未分组'"></i>
+    	<i class="i-edit-folder" ng-click="editOrg(item, addrType, $event);" ng-hide="item.groupName=='未分组'"></i>
+    </a>
+    <ul ng-if="item.group_list.length>0" ng-include="'./views/public/personItem.html'" ng-init="groupList=item.group_list;comlevel=item.level+15;addrType=addrType;" ng-show="item.show"></ul>
+</li>

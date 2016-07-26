@@ -1,0 +1,11 @@
+<li ng-repeat="item in groupList" ng-class="isOrgCurrent(item, addrType);">
+    <a href="javascript:;" ng-init="item.level=comlevel;" ng-click="itemClick(item, addrType);" ng-class="'pl-'+item.level">
+    	<i ng-class="item.show ? 'i-dot-down' : 'i-dot-right'"></i>
+    	<span>{{item.groupName}}({{item.userCount}})</span>
+    	<span has-permission="CONTACT_MANAGEMENT_EDIT">
+    		<i class="i-del1" ng-click="delOrg(item, addrType, $event);"></i>
+    		<i class="i-add-folder" ng-click="addOrg(item, addrType, $event);"></i>
+    	</span>
+    </a>
+    <ul ng-if="item.group_list.length>0" ng-include="'./views/public/companyItem.html'" ng-init="groupList=item.group_list;comlevel=item.level+15;addrType=addrType;" ng-show="item.show"></ul>
+</li>

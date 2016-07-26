@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>中国南方电网短信平台</title>
+    <meta name="description" content="中国南方电网短信平台">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap.css">
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->        
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/mod-pop.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>   
+      <script src="scripts/extras/html5shiv.min.js"></script>
+      <script src="scripts/extras/json2.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="smsWebApp" ng-controller="MainCtrl">
+    <!--[if lt IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- header [[ -->
+    <div class="header clearfix">
+        <h1 class="logo"></h1>
+        <div class="header-info">
+            <span>登录用户：</span><span string-html="userRealName"></span>
+            <a href="javascript:;" ng-click="logout()" class="btn-logout">注销</a>
+        </div>
+    </div>
+    <!-- header ]] -->
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul>
+                <li has-permission='HOME_PAGE' ng-class="checkCurrent('');"><a href="#/">首页</a></li>
+                <li has-permission='SMS_MANAGEMENT' ng-class="checkCurrent('/sms/');"><a href="#/sms/sentSMS">短信管理</a></li>
+                <li has-permission='MMS_MANAGEMENT' ng-class="checkCurrent('/mms/');"><a href="#/mms/sentMMS">彩信管理</a></li>
+                <li has-permission='CONTACT_MANAGEMENT' ng-class="checkCurrent('/addr/');"><a href="#/addr/contactList">通讯录</a></li>
+                <li has-permission='DATA_MANAGEMENT' ng-class="checkCurrent('/data/');"><a href="#/data/statistics" >数据统计</a></li>
+                <li has-permission='SYS_MANAGEMENT' ng-class="checkCurrent('/sys/');"><a href="#/sys/userInfo" >系统管理</a></li>
+            </ul>
+        </div>
+
+        <div class="content" ng-view="">            
+        </div>
+
+    </div>   
+    <div id="loadingDiv">正在载入，请稍候……</div>  
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/laydate/laydate.dev.js"></script>
+    <script src="bower_components/jquery-cookie/src/jquery.cookie.js"></script>
+    <script src="bower_components/jquery-ajaxfileupload/jquery.ajaxfileupload.js"></script>
+    <script src="bower_components/bootstrap/docs/assets/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>  
+    <script src="bower_components/echarts/echarts.common.js"></script>   
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/main.js -->    
+    <script src="scripts/app.js"></script>
+    <script src="scripts/router.js"></script>  
+    <script src="scripts/common/common.js"></script>  
+    <script src="scripts/common/telecom.js"></script>
+    <script src="scripts/common/alert.js"></script>  
+    <script src="scripts/services/angular.permission.js"></script>
+    <script src="scripts/services/angular.pagination.js"></script>
+    <script src="scripts/services/http.services.js"></script>
+    <script src="scripts/services/data.services.js"></script>
+    <script src="scripts/directives/stringHtml.js"></script>
+    <script src="scripts/directives/selectCustom.js"></script>
+    <script src="scripts/directives/selectAddr.js"></script> 
+    <script src="scripts/directives/formValidation.js"></script>
+
+    <script src="scripts/controllers/home.js"></script>
+    <script src="scripts/controllers/error.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+
+    <script src="scripts/controllers/sms/sentSMS.js"></script>
+    <script src="scripts/controllers/sms/smsReceive.js"></script>
+    <script src="scripts/controllers/sms/smsDrafts.js"></script>
+    <script src="scripts/controllers/sms/smsTemplate.js"></script>
+    <script src="scripts/controllers/sms/smsRecord.js"></script>
+
+    <script src="scripts/controllers/mms/sentMMS.js"></script>
+    <script src="scripts/controllers/mms/mmsReceive.js"></script>
+    <script src="scripts/controllers/mms/mmsDrafts.js"></script>
+    <script src="scripts/controllers/mms/mmsRecord.js"></script>
+
+    <script src="scripts/controllers/data/statistics.js"></script>
+
+    <script src="scripts/controllers/addr/contactList.js"></script>
+
+    <script src="scripts/controllers/sys/userInfo.js"></script>
+    <script src="scripts/controllers/sys/userList.js"></script>
+    <script src="scripts/controllers/sys/userRole.js"></script>
+    <script src="scripts/controllers/sys/taskList.js"></script> 
+    <script src="scripts/controllers/sys/logList.js"></script> 
+    <script src="scripts/controllers/sys/sysConfig.js"></script>   
+    <script src="scripts/controllers/sys/sysMonitor.js"></script>   
+    <script src="scripts/controllers/sys/noticeList.js"></script> 
+    <script src="scripts/controllers/sys/pipeConfig.js"></script>  
+    <script src="scripts/controllers/sys/blackList.js"></script> 
+
+    <script src="scripts/filters/dataFilter.js"></script>    
+    <!-- endbuild -->
+</body>
+</html>

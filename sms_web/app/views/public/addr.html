@@ -1,0 +1,49 @@
+<div id="addrModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addrModalLabel" aria-hidden="true">  
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="addrModalLabel">选择联系人</h3>
+    </div>
+    <div class="modal-body">
+        <div class="">
+            <div class="clearfix">
+                <div class="select-addr-l">
+                    <p class="tit">请从下面选择要共享的联系人<a href="javascript:;" ng-click="refresh()">刷新通讯录</a></p>
+                    <div class="select-search">
+                        <input type="text" placeholder="快速搜索联系人" id="searchKey" ng-model="searchKey"/>
+                        <a href="javascript:;" class="btn-search" ng-click="btnSearch()"><i class="i-search"></i></a>
+                    </div>
+                    <div class="select-addr-active">
+                        <ul ng-show="searchList.length == 0">
+                            <li has-permission='CONTACT_MANAGEMENT_VIEW'>
+                                <a href="javascript:;" ng-click="showCompanyAddr = !showCompanyAddr"><i ng-class="showCompanyAddr ? 'i-dot-down' : 'i-dot-right'"></i>企业通讯录</a>
+                                <ul ng-if="(selectAddr.companyAddr.group_list.length > 0 || selectAddr.companyAddr.user_list.length > 0)" ng-include="'./views/public/treeItem.html'" ng-init="groupList=selectAddr.companyAddr.group_list;userList=selectAddr.companyAddr.user_list;" ng-show="showCompanyAddr"></ul>                               
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="showPersonAddr = !showPersonAddr"><i ng-class="showPersonAddr ? 'i-dot-down' : 'i-dot-right'"></i>个人通讯录</a>
+                                <ul ng-if="(selectAddr.personAddr.group_list.length > 0 || selectAddr.personAddr.user_list.length > 0)" ng-include="'./views/public/treeItem.html'" ng-init="groupList=selectAddr.personAddr.group_list;userList=selectAddr.personAddr.user_list;" ng-show="showPersonAddr"></ul>
+                            </li>
+                        </ul>
+                        <ul ng-show="searchList.length > 0">
+                            <li ng-repeat="user in searchList">
+                                <span ng-click="selectItem(user)">{{user.u_name}} [{{user.groupName}}]<br/>{{user.u_phone}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="javascript:;" class="select-addr-m"><i class="i-into"></i></a>
+                <div class="select-addr-r">
+                    <p class="tit">选择（<span>{{ngModel.length}}</span>人<a href="javascript:;" ng-click="removeAll()">清空</a>）</p>
+                    <div class="select-addr-passive">
+                        <ul>
+                            <li ng-repeat="item in ngModel"><a href="javascript:;"><span>{{item.u_name}} ({{item.u_phone}})</span><i class="i-remove" ng-click="removeItem(item)"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</a>
+        <a href="javascript:;" class="btn-dblue" ng-click="btnCallBack()">确定</a>
+    </div>  
+</div>

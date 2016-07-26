@@ -1,0 +1,207 @@
+<div class="content-addr">
+    <div class="pt-10 mb-10 ml-10 mht-30">
+        <span has-permission="CONTACT_MANAGEMENT_EDIT" ng-show="addrType == 'company'" ng-hide="isSuperAdmin">
+            <a href="javascript:;" class="btn-lblue mr-10" ng-click="addnewContact(addrType);"><i class="i-add-user mr-5"></i>新增</a>
+            <a href="javascript:;" class="btn-lblue mr-10" ng-click="importContact(addrType);"><i class="i-import mr-5"></i>导入</a>
+            <a href="javascript:;" class="btn-gray" ng-click="deleteContact(addrType);"><i class="i-del2 mr-5"></i>删除选中</a>
+        </span>
+        <span ng-show="addrType == 'person'">
+            <a href="javascript:;" class="btn-lblue mr-10" ng-click="addnewContact(addrType);"><i class="i-add-user mr-5"></i>新增</a>
+            <a href="javascript:;" class="btn-lblue mr-10" ng-click="importContact(addrType);"><i class="i-import mr-5"></i>导入</a>
+            <a href="javascript:;" class="btn-lblue mr-10" ng-click="exportContact(addrType);"><i class="i-export mr-5"></i>导出</a>
+            <a href="javascript:;" class="btn-gray" ng-click="deleteContact(addrType);"><i class="i-del2 mr-5"></i>删除选中</a>
+        </span>
+        <span>&nbsp;</span>
+        <div class="search">
+            <input type="text" id="keyWord" ng-model="keyWord" placeholder="搜索用户名或手机号码"/>
+            <a href="javascript:;" id="btnSearch" ng-click="searchData();"><i class="i-search"></i></a>
+        </div>
+    </div>
+    <div class="addr">
+        <div class="addr-bar">
+            <ul>
+                <li has-permission="CONTACT_MANAGEMENT_VIEW">
+                    <h3>企业通讯录</h3>
+                    <ul>
+                        <li ng-class="isOrgCurrent(addrCompanyAddrOrg, 'company');" ng-hide="isSuperAdmin">
+                            <h4 ng-click="itemClick(addrCompanyAddrOrg, 'company');">
+                                <i ng-class="addrCompanyAddrOrg.show ? 'i-dot-down' : 'i-dot-right'"></i>
+                                <span>{{addrCompanyAddrOrg.companyName}}({{addrCompanyAddrOrg.userCount}})</span>
+                                <span has-permission="CONTACT_MANAGEMENT_EDIT"><i class="i-add-folder" ng-click="addOrg(addrCompanyAddrOrg, 'company', $event);"></i></span>
+                            </h4>
+                            <ul ng-if="addrCompanyAddrOrg.companyAddr.group_list" ng-include="'./views/public/companyItem.html'" onload="groupList=addrCompanyAddrOrg.companyAddr.group_list;comlevel=30;addrType='company';" ng-show="addrCompanyAddrOrg.show"></ul>
+                        </li>
+                        <li ng-if="isSuperAdmin">
+                            <h4>
+                                <i class="i-dot-right"></i>
+                                {{addrCompanyAddrOrg.companyName}}
+                                <span>({{addrCompanyAddrOrg.userCount}})</span>
+                            </h4>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>个人通讯录</h3>
+                    <ul>
+                        <li ng-class="isOrgCurrent(addrPersonAddrOrg, 'person');">
+                            <h4 ng-click="itemClick(addrPersonAddrOrg, 'person');">
+                                <i ng-class="addrPersonAddrOrg.show ? 'i-dot-down' : 'i-dot-right'"></i>
+                                <span>所有联系人({{addrPersonAddrOrg.userCount}})</span>
+                                <i class="i-add-folder" ng-click="addOrg('', 'person', $event);"></i>
+                            </h4>
+                            <ul ng-if="addrPersonAddrOrg.personAddr.group_list" ng-include="'./views/public/personItem.html'" onload="groupList=addrPersonAddrOrg.personAddr.group_list;comlevel=30;addrType='person'" ng-show="addrPersonAddrOrg.show"></ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="addr-con">
+            <table class="filter-main table-hover">
+                <tr>
+                    <th class="wd-50"><input type="checkbox" ng-init="addrCheckAll = false;" ng-click="addrCheckAll=!addrCheckAll;" ng-checked="addrCheckAll" /></th>
+                    <th>姓名</th>
+                    <th>手机</th>
+                    <th>{{addrType == 'company' ? '部门' : '群组'}}</th>
+                    <th class="wd-80">性别</th>
+                    <th class="wd-50">年龄</th>
+                </tr>
+                <tr ng-repeat="item in contentList track by $index">
+                    <td><input type="checkbox" name="ckbContact" value="{{item.addrId}}" ng-checked="addrCheckAll" /></td>
+                    <td>{{item.u_name}}</td>
+                    <td>{{item.u_phone}}</td>
+                    <td>{{item.u_dept}}</td>
+                    <td>{{item.u_sex | sexFormat}}</td>
+                    <td>{{(item.age > 0) ? item.age : '-'}}</td>
+                </tr>
+                <tr ng-if="contentList.length == 0">
+                  <td colspan="6">暂无数据！</td>   
+                </tr>
+            </table>
+
+            <div angular-pagination="" conf="paginationConf"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 添加\修改部门 -->
+<div id="editDeptModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="editDeptForm" ng-submit="submitDeptForm(editDeptForm.$valid, deptFormData, addrType, actionType)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>{{actionType == 'add' ? "新建": "修改"}}{{addrType == 'company' ? '部门' : '群组'}}信息</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+        <ul>  
+            <li class="clearfix">
+                <label class="alert-bd-label">{{addrType == 'company' ? '部门' : '群组'}}名称：</label>
+                <div class="label-con">
+                    <input type="hidden" ng-model="deptFormData.parentId" />
+                    <input type="hidden" ng-model="deptFormData.groupId" />
+                    <input type="text" placeholder="" class="input" ng-model="deptFormData.groupName" form-validation="empty name" />
+                </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="editDeptForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal 添加\修改部门 End-->
+
+<!-- Modal 添加联系人 -->
+<div id="editContactModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="editContactForm" ng-submit="submitContactForm(editContactForm.$valid, contactFormData, addrType, actionType)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>{{actionType == 'add' ? "新建": "修改"}}{{addrType == 'company' ? '企业' : '个人'}}联系人信息</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+        <ul>  
+            <li class="clearfix">
+                <label class="alert-bd-label">{{addrType == 'company' ? '部&nbsp;&nbsp;&nbsp;门' : '群&nbsp;&nbsp;&nbsp;组'}}：</label>
+                <div class="label-con">                    
+                    <input type="text" class="input" ng-model="contactFormData.groupName" disabled />
+                </div>
+            </li>
+            <li class="clearfix">
+                <label class="alert-bd-label">姓&nbsp;&nbsp;&nbsp;名：</label>
+                <div class="label-con">                    
+                    <input type="hidden" ng-model="contactFormData.addrId" />
+                    <input type="hidden" ng-model="contactFormData.groupId" />
+                    <input type="text" placeholder="" class="input" ng-model="contactFormData.addrName" form-validation="empty name" />
+                </div>
+            </li>
+            <li class="clearfix">
+                <label class="alert-bd-label">手机号：</label>
+                <div class="label-con">
+                    <input type="text" placeholder="" class="input" ng-model="contactFormData.addrPhone" form-validation="empty mobile" />
+                </div>
+            </li>
+            <li class="clearfix">
+                <label class="alert-bd-label">性&nbsp;&nbsp;&nbsp;别：</label>
+                <div class="label-con">
+                    <span><input type="radio" name="addrSex" ng-model="contactFormData.addrSex" value="0" /> 男 &nbsp; </span> 
+                    <span><input type="radio" name="addrSex" ng-model="contactFormData.addrSex" value="1" /> 女 &nbsp; </span>
+                    <span><input type="radio" name="addrSex" ng-model="contactFormData.addrSex" value="2" /> 保密 </span>                    
+                </div>
+            </li>
+            <li class="clearfix">
+                <label class="alert-bd-label">年&nbsp;&nbsp;&nbsp;龄：</label>
+                <div class="label-con">
+                    <input type="number" placeholder="" class="input" ng-model="contactFormData.age" />
+                </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="editContactForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal 添加联系人 End-->
+
+
+<!-- Modal 导入联系人 -->
+<div id="importModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="importForm" >
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>导入{{addrType == 'company' ? '企业' : '个人'}}联系人信息</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+        <ul>  
+            <li class="clearfix">
+                <label class="alert-bd-label">{{addrType == 'company' ? '部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门' : '群&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组'}}：</label>
+                <div class="label-con">                    
+                    <input type="hidden" ng-model="importFormData.groupId" />
+                    <input type="text" class="input" ng-model="importFormData.groupName" disabled />
+                </div>
+            </li>
+            <li class="clearfix">
+                <label class="alert-bd-label">选择文件：</label>
+                <div class="label-con">
+                    <a href="javascript:;" id="btnUpFile" onclick="return $('#uploadFile').click();" class="btn-green">选择文件</a>
+                    <input type="file" name="uploadFile" id="uploadFile" class="hide" value="浏览" />
+                </div>
+            </li>
+            <li class="clearfix">
+                <label class="alert-bd-label">下载模板：</label>
+                <div class="label-con"><label><a href="/smsApi/downloadSmsAddrTemplate.do?sid={{sid}}">下载联系人导入模板</a></label></div>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+  </form>
+</div>
+<!-- Modal 导入联系人 End-->

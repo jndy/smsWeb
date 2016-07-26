@@ -1,0 +1,10 @@
+<div class="msg-down">
+    <span>短信<i class="i-dx"></i></span>
+</div>
+<ul class="sitenav clearfix">
+    <li has-permission='SMS_SENT' ng-class="{current: navCurrent == 'sentSMS'}"><a href="#/sms/sentSMS">写信</a></li>
+    <li has-permission='SMS_RECEIVE' ng-class="{current: navCurrent == 'smsReceive'}"><a href="#/sms/smsReceive">收信</a></li>
+    <li has-permission='SMS_SENT' ng-class="{current: navCurrent == 'smsDrafts'}"><a href="#/sms/smsDrafts">草稿箱</a></li>
+    <li has-permission='SMS_TEMPLATES' ng-class="{current: navCurrent == 'smsTemplate'}"><a href="#/sms/smsTemplate">短信模板</a></li>
+    <li has-permission='SMS_SENT_RECORD' ng-class="{current: navCurrent == 'smsRecord'}"><a href="#/sms/smsRecord">发送记录</a></li>
+</ul>

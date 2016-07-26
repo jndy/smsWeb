@@ -1,0 +1,73 @@
+<div ng-include="'views/sms/smsNav.html'"></div>
+
+<div class="container clearfix">
+    <div class="fill-msg">
+        <div class="msg-about">单条短信<span>70</span>字；已输入<span class="red">{{smsContent.length}}</span>字；</div>
+        <div class="fill-textarea">
+            <textarea name="" id="" cols="30" rows="10" ng-model="smsContent" placeholder="如使用短信模板，则不可修改标签内的字段名，如：[uname]。"></textarea>
+            <div class="fill-temp" ng-show="showTemplate">
+                <ul>
+                    <li ng-repeat="temp in tempList track by $index"><a href="javascript:;" ng-click="selectTemplate(temp);">{{$index+1}}、<span string-html="temp.tempName"></span></a></li>
+                    <li ng-if="tempList.length==0"><a href="javascript:;">暂无可用模板！</a></li>
+                </ul>
+            </div>
+            <a href="javascript:;" class="btn-temp" ng-init="showTemplate = false;" ng-click="showTemplate = !showTemplate"><i class="i-temp"></i>使用模板</a>            
+        </div>
+        <div class="submit-msg-btn">
+            <button type="button" class="btn-orange btn-sent" ng-disabled="!isDisabled('1')" ng-click="currentSend()">发送</button>
+            <button type="button" class="btn-white btn-sent ml-10" ng-disabled="!isDisabled('1')" ng-click="saveSend()">存草稿</button>
+        </div>
+        <div class="submit-msg-btn">            
+            <input placeholder="请选择时间" class="laydate-icon" ng-click="chooseDate()" id="sendTime" ng-model="sendTime" style="width: 110px;">
+            <button type="button" class="btn-orange btn-orange1" ng-disabled="!isDisabled('2')" ng-click="regularlySend()">定时发送</button>
+        </div>
+    </div>
+    <div class="show-msg">
+        <div class="mb-10 clearfix">
+            <a href="javascript:;" class="btn-gray" ng-click="deleteSelected()"><i class="i-del"></i>删除选中</a>
+            <div class="search">
+                <input type="text" name="searchKey" placeholder="搜索手机号码" ng-model="searchKey" />
+                <a href="javascript:;"><i class="i-search"></i></a>
+            </div>
+        </div>
+        <div class="msg-table">
+            <div class="table-tit clearfix">
+                <div class="col"><span><input type="checkbox" name="chkAll" ng-model="chkAll2" ng-click="checkAll(chkAll2, '2')" />移动[{{mobileList.length}}]</span></div>
+                <div class="col"><span><input type="checkbox" name="chkAll" ng-model="chkAll1" ng-click="checkAll(chkAll1, '1')" />联通[{{unicomList.length}}]</span></div>
+                <div class="col col3"><span><input type="checkbox" name="chkAll" ng-model="chkAll3" ng-click="checkAll(chkAll3, '3')" />电信[{{telecomList.length}}]</span></div>
+            </div>
+            <div class="table-con">
+                <div class="col">
+                    <div class="col-con">
+                        <p ng-repeat="item in mobileList track by $index" ng-class="isSearchResult(item);"><input type="checkbox" name="chkMobile" ng-model="$index" ng-change="ckbChange($index, item, '2')" ng-checked="allMobileCheck"/>{{item.u_phone}}</p>                                   
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-con">
+                        <p ng-repeat="item in unicomList track by $index" ng-class="isSearchResult(item);"><input type="checkbox" name="chkUnicom" ng-model="$index" ng-change="ckbChange($index, item, '1')" ng-checked="allUnicomCheck"/>{{item.u_phone}}</p>  
+                    </div>
+                </div>
+                <div class="col col3">
+                    <div class="col-con">
+                        <p ng-repeat="item in telecomList track by $index" ng-class="isSearchResult(item);"><input type="checkbox" name="chkTelecom" ng-model="$index" ng-change="ckbChange($index, item, '3')" ng-checked="allTelecomCheck" />{{item.u_phone}}</p>  
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="msg-fun">
+            <div class="msg-addr">
+                <input type="text" placeholder="姓名" class="msg-addr-name" ng-model="addName" />
+                <input type="text" placeholder="手机号码" class="msg-addr-phone" ng-model="addMobile" id="addMobile" maxlength="11" />
+                <button type="button" class="btn-dblue" ng-disabled="addMobile == ''" ng-click="btnAddSingle();" id="btnSingle">添加</button>
+                <button type="button" class="btn-dblue ml-5" ng-click="openAddrSelect();">通讯录添加</button>
+                <button type="button" id="btnUpFile" onclick="return $('#uploadFile').click();" class="btn-dblue ml-5">导入</button>
+                <input class="hide" name="uploadFile" id="uploadFile" type="file" value="浏览" />
+            </div>
+            <div class="msg-model">
+                <a href="/smsApi/downloadSmsAddrTemplate.do?sid={{sid}}">下载联系人导入模板</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-model="addrSelected" select-addr="addrTreeData" refresh-addr="refreshAddrData" call-back="addFromContact"></div>

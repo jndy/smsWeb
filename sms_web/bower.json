@@ -1,0 +1,22 @@
+{
+  "name": "sms-web",
+  "version": "1.0.0",
+  "dependencies": {
+    "jquery": "1.12.3",
+    "jquery-cookie": "1.4.1",
+    "bootstrap": "2.3.2",
+    "angular": "1.2.16",   
+    "angular-resource": "1.2.16",
+    "angular-cookies": "1.2.16",
+    "angular-sanitize": "1.2.16",
+    "angular-animate": "1.2.16",
+    "angular-touch": "1.2.16",
+    "angular-route": "1.2.16"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.16",
+    "angular-scenario": "1.2.16"
+  },
+  "appPath": "app",
+  "moduleName": "smsWebApp"
+}

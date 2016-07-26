@@ -1,0 +1,62 @@
+<div ng-include="'views/sms/smsNav.html'"></div>
+
+<div class="container">
+    <div class="filter-tab">
+        <div class="mb-10 clearfix">
+            <div class="filter-attr clearfix">
+                <div class="filter-choose">
+                    <span class="filter-txt" id="startDate">{{startDate}}</span>
+                    <a href="javascript:;" class="btn-down" ng-click="startDateChoose()"><i class="i-down"></i></a>
+                </div>
+                <span class="filter-block">至</span>
+                <div class="filter-choose">
+                    <span class="filter-txt" id="endDate">{{endDate}}</span>
+                    <a href="javascript:;" class="btn-down" ng-click="endDateChoose()"><i class="i-down"></i></a>
+                </div>
+                <input type="text" placeholder="短信内容" ng-model="keyWord" class="filter-input filter-input-long hide"/>
+                <button class="btn-dblue ml-5" ng-click="searchData()">查询</button>
+            </div>
+            <span class="filter-btn">
+                <a href="javascript:;" class="btn-lblue" ng-click="exportData()">导出</a>
+            </span>           
+        </div>
+    </div>
+    <div class="">
+        <table class="filter-main table-hover">
+            <tr>
+                <th>序号</th>
+                <th>短信内容</th>
+                <th>发送时间</th>
+                <th>发送数量</th>
+                <th>发送状态</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="item in recordList track by $index">
+                <td>{{$index+1}}</td>
+                <td><div class="td-over" string-html="item.content"></div></td>
+                <td><div class="td-nowrap">{{item.createTime | timeFormat}}</div></td>
+                <td>{{item.userCount}}</td>
+                <td>
+                    <div class="td-nowrap" ng-if="item.waitSendCount == 0">成功{{item.successCount}} | <a href="javascript:;" ng-click="showFloatDiv(item.contentUuid)">失败{{item.failCount}}</a> <span ng-if="item.sendingCount > 0">| 发送中{{item.sendingCount}}</span></div>
+                    <div class="td-nowrap" ng-if="item.waitSendCount > 0">待发送{{item.waitSendCount}}</div>
+                    <div class="popover-div" ng-if="item.failCount > 0" ng-show="item.contentUuid == currentUuid">
+                        <div class="arrow"></div>
+                        <h3 class="float-title">发送失败</h3>
+                        <div class="float-content">
+                            <ul><li ng-repeat="fitem in item.phoneList">{{fitem.u_phone}} | {{fitem.u_name || '-'}}</li></ul>
+                        </div>
+                    </div>
+                </td>
+                <td><div class="td-nowrap">
+                    <a href="#/sms/sentSMS/record/{{item.contentUuid}}" class="set-fun"><i class="i-detail"></i>详情</a>
+                    <a href="javascript:;" ng-click="failReSent(item)" class="set-fun ml-5"><i class="i-again"></i>失败重发</a>
+                </div></td>
+            </tr>
+            <tr ng-if="recordList.length == 0">
+              <td colspan="6">暂无数据！</td>   
+            </tr>
+        </table>
+        <div angular-pagination="" conf="paginationConf"></div>
+    </div>
+</div>
+

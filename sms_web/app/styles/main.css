@@ -1,0 +1,116 @@
+/*浏览器版本过低*/
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/*loading层样式*/
+#loadingDiv{
+  position: absolute;
+  top: 0px;
+  left: 50%; 
+  margin-left: -60px; 
+  color: #006699;
+  background-color: #FFF;
+  padding: 5px 15px;
+  border-radius: 5px;
+  z-index: 10000;
+}
+
+/*模态框透明度*/
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+.modal-header {
+    padding: 5px 15px;
+}
+.modal-body {
+    padding: 0 15px;
+}
+.modal-body p{
+    line-height: 30px;
+}
+.modal-footer {
+    padding: 8px 10px;
+}
+.modal-dialog {
+  width: 600px;
+  margin: 30px auto;
+}
+.modal-content {
+  /*-webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, .5);*/
+}
+.modal-sm {
+  width: 300px;
+  margin-left: -150px;
+}
+.modal-lg {
+  width: 900px;
+  margin-left: -450px;
+}
+
+/*提示框*/
+#bootstrap-alert.modal{
+  top: 30%;
+}
+
+/*文字对齐方向*/
+.text-center{text-align: center;}
+.text-right{text-align: right;}
+
+/*表格中浮动层*/
+.popover-div{ position: absolute;z-index: 1010;max-width: 276px;padding: 1px;text-align: left;margin-top: 5px;white-space: normal;background-color: #fff;border: 1px solid #ccc;border: 1px solid rgba(0,0,0,0.2);-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+.popover-div .arrow,.popover-div .arrow:after{position:absolute;display:block;width:0;height:0;border-color:transparent;border-style:solid}
+.popover-div .arrow{border-width:11px}
+.popover-div .arrow:after{border-width:10px;content:""}
+.popover-div .arrow{top:-11px;left:50%;margin-left:-11px;border-bottom-color:#999;border-bottom-color:rgba(0,0,0,0.25);border-top-width:0}
+.popover-div .arrow:after{top:1px;margin-left:-10px;border-bottom-color:#fff;border-top-width:0}
+.popover-div .float-title{ padding: 5px 10px;margin: 0;font-size: 14px;font-weight: normal;line-height: 18px;background-color: #f7f7f7;border-bottom: 1px solid #ebebeb;}
+.popover-div .float-content{ padding: 5px 10px; }
+.popover-div .float-content li{line-height: 22px; font-size: 13px; }
+  
+
+/*分页控件*/
+.page-list.left{ float: left;}
+.page-list.right{ float: right;}
+.page-list .pagination {float:left;}
+.page-list .pagination li a {cursor: pointer;}
+.page-list .pagination .separate a{cursor: default; border-top:none; border-bottom:none;}
+.page-list .pagination .separate a:hover {background: none;}
+.page-list .page-total {float: left; margin: 18px 20px; height: 30px; font-size: 13px; line-height: 30px; vertical-align: middle;}
+.page-list .page-total input, .page-list .page-total select{border: 1px solid #ddd; margin: 0px 3px; vertical-align: middle;}
+.page-list .page-total input {width: 30px; height: 26px; line-height: 26px;}
+.page-list .page-total select {width: 50px; height: 28px; padding:3px 0px; *padding:3px 0px;}
+
+/*下拉框组件*/
+.filter-ddl{ position: absolute; left: -1px; top: 30px; z-index: 200; border: 1px solid #C6C6C6; background-color: #fff; color: #333; width: 100%; max-height: 300px; padding-bottom: 5px; overflow-y: scroll;}
+.filter-ddl a{ display: block; height: 20px; color: #333; padding: 5px 5px 0 10px; overflow: hidden;}
+
+/*angularjs 表单验证提示*/
+form .ng-dirty{ border: 1px solid #5897fb !important; }
+form .ng-invalid{ border: 1px solid #b94a48 !important;}
+form .ng-valid{ border: 1px solid #468847 !important; }  
+form .ng-pristine{ border: 1px solid #d6d6d6 !important;}
+form .ng-invalid-error{ border: 1px solid #b94a48 !important;}
+form .valid-error{ color: red; line-height: 30px; margin-left: 5px; font-size: 12px;}
+
+/*日期选择input高度*/
+.laydate-icon{ height: 26px !important; line-height: 26px !important;}
+
+/*内容栏布局*/
+.container .content-left{width:49%; min-height:300px; float:left; }
+.container .content-right{width:49%; margin-left: 2%; min-height:300px; float:left; }
+.container .content-total{ width: 100%; height: 50px; }
+.container .content-total span{ line-height: 50px; font-size: 15px; margin-left: 20px;}
+.page-config { padding-bottom: 10px; overflow: auto;}
+.page-config h2{ line-height: 35px; font-size: 15px;}
+.page-config .pagination{margin: 0px;}
+.page-config .filter-main tr td{padding: 0px;}
+.page-config .filter-main .downloadlink{ margin-left: 5px; size:12px; font-weight: normal;}
+.page-config .search{ width: 160px;}
+.page-config .search a{ padding: 0px 0px 0 3px;}
+.page-config .search input{ width: 125px;}

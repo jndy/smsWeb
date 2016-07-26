@@ -1,0 +1,24 @@
+/*页码*/
+.page{text-align: center;}
+.page a{background: #f3f3f3;color: #666666;height: 28px;border: #d8d8d8 1px solid;display: inline-block;font: 12px/28px "microsoft yahei";text-align: center;padding: 0 10px;margin-right: 7px;vertical-align: top;}
+.page a:hover{background: #ececec;color: #0085d0;}
+.page a.page-prev, .page a.page-next{background: #f1f1f1;color: #555555;line-height: 30px;_height: 23px;_padding-top: 5px;}
+.page a.current{border: none;background: none;color: #0085d0;}
+.page a i{background-image: url("../images/page.png");width: 13px;height: 12px;overflow: hidden;_vertical-align: middle;}
+.i-prev{background-position: 0 0;margin-right: 5px;display: inline-block;}
+.i-next{background-position: -15px 0;margin-left: 5px;display: inline-block;}
+.page a.disabled{color: #cccccc;background: #fbfbfb;cursor: default;}
+.page a.disabled i.i-prev{background-position: 0 -26px;}
+.page a.disabled i.i-next{background-position: -15px -26px;}
+.page a.disabled:hover{color: #cccccc!important;}
+.page a.disabled:hover i.i-prev{background-position: 0 -26px!important;;}
+.page a.disabled:hover i.i-next{background-position: -15px -26px!important;}
+.page a.page-prev:hover, .page a.page-next:hover{color: #0085d0;}
+.page a.page-prev:hover i.i-prev{background-position: 0 -13px;}
+.page a.page-next:hover i.i-next{background-position: -15px -13px;}
+.page-info{color: #999999;margin-top: 4px;_margin-top: 6px;display: inline-block;}
+.page-info strong{font-weight: 100;margin: 0 3px;}
+.page-num{width: 28px;height: 18px;line-height: 18px;border: #dddddd 1px solid;text-align: center;margin: 0 5px;color: #999999;}
+.page a.btn-page{height: 22px;line-height: 22px;border: #c2c2c2 1px solid;margin-left: 14px;}
+.page a.page-break{cursor: default;line-height: 20px; vertical-align: top;}
+.page a.page-break:hover{background: #f3f3f3;color: #666666;}

@@ -1,0 +1,28 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+  <form name="editForm" ng-submit="submitForm(editForm.$valid, formData)">
+    <div class="modify-psw">
+       <h3>修改密码</h3>
+       <ul>
+           <li ng-show="needModPwd">
+               <span class="error">为了您的账号安全，请修改密码</span><span>（用户首次登录或密码使用超过3个月）</span>
+           </li>
+           <li>
+               <label for="">旧 密 码：</label><input type="password" name="userPwd" ng-model="formData.userPwd" class="input" form-validation="empty" />
+           </li>
+           <li>
+               <label for="">新 密 码：</label><input type="password" name="newUserPwd" id="newUserPwd" ng-model="formData.newUserPwd" class="input" pwd-check="3" form-validation="empty" maxlength="30" />
+               <font class="tip">8-30位，区分大小写，含字母、数字、及特殊符号</font>
+           </li>
+           <li>
+               <label for="">确认密码：</label><input type="password" name="userPwdAgain" ng-model="formData.userPwdAgain" class="input" cppw-check="newUserPwd" form-validation="empty" />
+           </li>
+           <li ng-hide="needModPwd">
+               <label for="">手机号码：</label><input type="text" name="phone" ng-hide="needModPwd" ng-model="formData.phone" class="input" form-validation="empty" />
+           </li>
+       </ul>
+       <div class="btn-fun"><button type="submit" class="btn-dblue" ng-disabled="editForm.$invalid">保存</button></div>
+    </div>
+  </form>
+</div>

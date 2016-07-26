@@ -1,0 +1,100 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+    <div class="mb-10 clearfix">
+        <div class="filter-attr clearfix">
+            <input type="text" placeholder="公告标题或内容" ng-model="keyWord" class="filter-input filter-input-long ml-0" />
+            <button class="btn-dblue" ng-click="searchData()">查询</button>
+        </div>
+        <span class="filter-btn">
+            <a href="javascript:;" class="btn-dblue" ng-click="editNotice();" has-permission='NOTICE_MANAGEMENT_EDIT'><i class="i-add mr-5"></i>新增公告</a>
+        </span>           
+    </div>
+    <table class="filter-main table-hover">
+        <tr>
+            <th>序号</th>
+            <th>公告标题</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        <tr ng-repeat="item in noticeList track by $index">
+            <td>{{item.noticeId}}</td>
+            <td><div class="td-over" string-html="item.noticeTitle"></div></td>
+            <td>{{item.creator}}</td>
+            <td><div class="td-nowrap">{{item.createTime | timeFormat}}</div></td>
+            <td><div class="td-nowrap">
+                <a href="javascript:;" class="set-fun" ng-click="showNotice(item);" has-permission='NOTICE_MANAGEMENT_VIEW'><i class="i-detail"></i>查看</a>
+                <a href="javascript:;" class="set-fun" ng-click="editNotice(item);" has-permission='NOTICE_MANAGEMENT_EDIT' ng-show="companyId == item.companyId || isSuperAdmin"><i class="i-edit"></i>编辑</a>
+                <a href="javascript:;" class="set-fun" ng-click="delNotice(item);" has-permission='NOTICE_MANAGEMENT_EDIT' ng-show="companyId == item.companyId || isSuperAdmin"><i class="i-del1"></i>删除</a>
+            </div></td>
+        </tr>
+        <tr ng-if="noticeList.length == 0">
+          <td colspan="5">暂无数据！</td>   
+        </tr>
+    </table>
+
+    <div angular-pagination="" conf="paginationConf"></div>
+</div>
+
+
+<!-- Modal 查看公告 -->
+<div id="viewModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">  
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="viewModalLabel">查看公告</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert-bd">
+           <ul>            
+               <li class="clearfix text-center">
+                   <h2 string-html="noticeTitle"></h2>
+               </li>               
+               <li class="clearfix" string-html="noticeContent">
+               </li> 
+               <li class="clearfix text-right">
+                   {{createTime | timeFormat}}&nbsp;&nbsp;| 【{{creator}}】
+               </li>              
+           </ul>
+        </div>   
+    </div>
+    <div class="modal-footer">
+      <button class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div> 
+</div>
+<!-- Modal 查看公告 End-->
+
+
+<!-- Modal 编辑 -->
+<div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <form name="editForm" ng-submit="submitForm(editForm.$valid, formData, editType)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="editModalLabel">{{(editType == "add")? "新增" : "修改"}}公告</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+         <ul>
+             <li class="clearfix">
+                 <label class="alert-bd-label">标题：</label>
+                 <div class="label-con">
+                    <input type="hidden" ng-model="formData.noticeId" />
+                    <input type="text" placeholder="" class="input" ng-model="formData.noticeTitle" form-validation="empty"/>
+                 </div>
+             </li>
+             <li class="clearfix">
+                 <label class="alert-bd-label">内容：</label>
+                 <div class="label-con">
+                     <textarea cols="30" rows="10" class="textarea" placeholder="" ng-model="formData.noticeContent" form-validation="empty" style="height:150px;"></textarea>                     
+                 </div>
+             </li>
+         </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="editForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal 编辑 End-->

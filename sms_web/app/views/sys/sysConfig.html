@@ -1,0 +1,362 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+    <div class="page-config">
+        <div class="content-left">
+            <h2>公司设置</h2>
+            <table class="filter-main table-hover">
+              <thead>
+                <tr>
+                  <th class="wd-50"><input type="checkbox" ng-click="checkAll($event, 'ckbCompany');" /> #</th>
+                  <th>公司名称</th>
+                  <th>套餐总量</th>
+                  <th>套餐余量</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in companyList track by $index">
+                  <td><input type="checkbox" name="ckbCompany" value="{{item.comId}}" /> {{item.comId}}</td>
+                  <td>{{item.comName}}</td>
+                  <td>
+                    <div class="td-nowrap">
+                      <a href="javascript:;" ng-click="showFloatDiv(item.comId)">短信:{{item.smsTotal}}; 彩信:{{item.mmsTotal}}</a> | 
+                      <a href="javascript:;" ng-click="editCount(item);">修改</a></div>
+                    <div class="popover-div" ng-show="item.comId == currentComId">
+                        <div class="arrow"></div>
+                        <h3 class="float-title">短彩信配置详情</h3>
+                        <div class="float-content">
+                            <ul>
+                              <li>移动短信 总:{{item.mobileSmsTotal}}; 余:{{item.mobileSmsRemain}}</li>
+                              <li>联通短信 总:{{item.unicomSmsTotal}}; 余:{{item.unicomSmsRemain}}</li>
+                              <li>电信短信 总:{{item.telcomSmsTotal}}; 余:{{item.telcomSmsRemain}}</li>
+                              <li>移动彩信 总:{{item.mobileMmsTotal}}; 余:{{item.mobileMmsRemain}}</li>
+                              <li>联通彩信 总:{{item.unicomMmsTotal}}; 余:{{item.unicomMmsRemain}}</li>
+                              <li>电信彩信 总:{{item.telcomMmsTotal}}; 余:{{item.telcomMmsRemain}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                  </td>
+                  <td>短信:{{item.smsRemain}}; 彩信:{{item.mmsRemain}}</td>
+                </tr>
+                <tr ng-if="companyList.length == 0">
+                  <td colspan="4">暂无数据！</td>
+                </tr>
+              </tbody>
+            </table>
+            <span class="filter-left">
+                <a href="javascript:;" class="btn-lblue" ng-click="delCompany();">删除</a>
+                <a href="javascript:;" class="btn-dblue ml-5" ng-click="addCompany();">新增</a>
+            </span>
+            <div angular-pagination="" conf="paginationCorp"></div>
+        </div>
+        <div class="content-right">
+            <h2>套餐设置</h2>
+            <table class="filter-main table-hover">
+              <thead>
+                <tr>
+                  <th class="wd-50"><input type="checkbox" ng-click="checkAll($event, 'ckbPackage');" /> #</th>
+                  <th class="wd-80">套餐名</th>
+                  <th>套餐内容</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in packageList track by $index">
+                  <td><input type="checkbox" name="ckbPackage" value="{{item.packId}}" /> {{item.packId}}</td>
+                  <td>{{item.packName}}</td>
+                  <td>{{item.packDetail}}</td>
+                </tr>
+                <tr ng-if="packageList.length == 0">
+                  <td colspan="3">暂无数据！</td>   
+                </tr>
+              </tbody>
+            </table>
+            <span class="filter-left">
+                <a href="javascript:;" class="btn-lblue" ng-click="delPackage();">删除</a>
+                <a href="javascript:;" class="btn-dblue ml-5" ng-click="addPackage();">新增</a>
+            </span>
+            <div angular-pagination="" conf="paginationPack"></div>
+        </div>
+    </div>
+    <div class="page-config">
+        <div class="content-left">
+          <h2>第三方接入IP配置</h2>
+          <table class="filter-main table-hover">
+            <thead>
+              <tr>
+               <th class="wd-50"><input type="checkbox" ng-click="checkAll($event, 'ckbIPAccess');" /> #</th>
+                <th>公司名称</th>
+                <th>IP地址</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ipAccessList track by $index">
+                <td><input type="checkbox" name="ckbIPAccess" value="{{item.accessId}}" /> {{item.accessId}}</td>
+                <td>{{item.comName}}</td>
+                <td>{{item.ipAddress}}</td>
+              </tr>
+              <tr ng-if="ipAccessList.length == 0">
+                <td colspan="3">暂无数据！</td>   
+              </tr>
+            </tbody>
+          </table>
+          <span class="filter-left">
+              <a href="javascript:;" class="btn-lblue" ng-click="delIPAccess();">删除</a>
+              <a href="javascript:;" class="btn-dblue ml-5" ng-click="addIPAccess();">新增</a>
+          </span>
+          <div angular-pagination="" conf="paginationAccess"></div>          
+        </div>        
+        <div class="content-right">
+            <h2>非法关键字配置
+              <div class="search">
+                <input type="text" ng-model="keyWord" placeholder="搜索关键字"/>
+                <a href="javascript:;" ng-click="searchSensitiveWord();"><i class="i-search"></i></a>
+              </div>
+            </h2>
+            <table class="filter-main table-hover">
+              <thead>
+                <tr>
+                  <th class="wd-80"><input type="checkbox" ng-click="checkAll($event, 'ckbsWord');" /> #</th>
+                  <th>关键字<span class="downloadlink"><a href="/smsApi/downloadSensitiveTemplate.do?sid={{sid}}">下载导入模板</a></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in wordList track by $index">
+                  <td><input type="checkbox" name="ckbsWord" value="{{item.wordId}}" ng-checked="sWordChecked" /> {{item.wordId}}</td>
+                  <td>{{item.wordContent}}</td>
+                </tr>
+                <tr ng-if="wordList.length == 0">
+                  <td colspan="2">暂无数据！</td>   
+                </tr>
+              </tbody>
+            </table>
+            <span class="filter-left2">
+                <button type="button" class="btn-lblue" ng-click="delSensitiveWord();">删除</button>                
+                <button type="button" class="btn-lblue" ng-click="exportSensitiveWord();">导出</button>
+                <button id="btnUpFile" onclick="return $('#uploadFile').click();" class="btn-dblue">导入</button>
+                <input class="hide" name="uploadFile" id="uploadFile" type="file" value="浏览" />
+            </span>
+            <div angular-pagination="" conf="paginationWord"></div>
+        </div>
+        <div class="content-left">
+          <h2>其他配置项</h2>
+           <li class="clearfix mb-10">
+               <label class="alert-bd-label">短 信 加 密：</label>
+               <div class="label-con">
+                  <input type="checkbox" name="sendEncrypt" ng-model="sendEncrypt" value="1" /> 发送短信存储加密 <br/> 
+                  <input type="checkbox" name="receiveEncrypt" ng-model="receiveEncrypt" value="1" /> 接收短信存储加密                                  
+               </div>
+           </li>
+          <span class="alert-btn">
+              <a href="javascript:;" class="btn-dblue ml-40" ng-click="saveOtherConfig();">保存</a>
+          </span>
+        </div>      
+    </div>
+</div>
+
+
+<!-- Modal Corp编辑 -->
+<div id="editCorpModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="editCorpForm" ng-submit="submitCorpForm(editCorpForm.$valid, corpFormData)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>{{actionType == 'add' ? "新建": "查看"}}公司信息</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+         <ul>
+             <li class="clearfix">
+                 <label class="alert-bd-label">名称：</label>
+                 <div class="label-con">
+                    <input type="text" placeholder="" class="input" ng-model="corpFormData.comName" form-validation="empty"/>
+                 </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">套餐：</label>
+                   <div class="label-con">
+                      <div select-custom="" ng-model="companyPackage" select-title="=短信套餐=" select-items="packageListForm" form-validation="emptySC"></div>
+                   </div>
+             </li>   
+             <li class="clearfix">
+                 <label class="alert-bd-label">描述：</label>
+                 <div class="label-con">
+                     <textarea cols="30" rows="10" class="textarea" placeholder="" ng-model="corpFormData.comDesc" form-validation="empty" style="height:150px;"></textarea>
+                 </div>
+             </li>
+         </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-if="actionType=='add'" ng-disabled="editCorpForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal Corp编辑 End-->
+
+<!-- Modal Count编辑 -->
+<div id="editCountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="editCountForm" ng-submit="submitCountForm(editCountForm.$valid, countFormData)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>加\减短彩信总量</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+         <ul>  
+             <li class="clearfix">
+                 <label class="alert-bd-label">公司名称：</label>
+                 <div class="label-con">
+                    <input type="hidden" ng-model="countFormData.comId" />
+                    <input type="text" placeholder="" class="input" ng-model="countFormData.comName" disabled/>
+                 </div>
+             </li>           
+             <li class="clearfix">
+                   <label class="alert-bd-label">移动短信：</label>
+                   <div class="label-con">                      
+                      <input type="number" placeholder="" class="input" ng-model="countFormData.mobileSmsAdd" />
+                   </div>
+             </li>             
+             <li class="clearfix">
+                   <label class="alert-bd-label">联通短信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="countFormData.unicomSmsAdd" />
+                   </div>
+             </li>
+             
+             <li class="clearfix">
+                   <label class="alert-bd-label">电信短信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="countFormData.telcomSmsAdd" />
+                   </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">移动彩信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="countFormData.mobileMmsAdd" />
+                   </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">联通彩信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="countFormData.unicomMmsAdd" />
+                   </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">电信彩信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="countFormData.telcomMmsAdd" />
+                   </div>
+             </li>
+         </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-disabled="editCountForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal Count编辑 End-->
+
+<!-- Modal Pack编辑 -->
+<div id="editPackModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="editPackForm" ng-submit="submitPackForm(editPackForm.$valid, packFormData)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>{{actionType == 'add' ? "新建": "查看"}}套餐信息</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+         <ul>
+             <li class="clearfix">
+                 <label class="alert-bd-label">套餐名称：</label>
+                 <div class="label-con">
+                    <input type="text" placeholder="" class="input" ng-model="packFormData.packName" form-validation="empty"/>
+                 </div>
+             </li>                
+             <li class="clearfix">
+                 <label class="alert-bd-label">套餐描述：</label>
+                 <div class="label-con">
+                     <textarea cols="25" rows="6" class="textarea" placeholder="" ng-model="packFormData.packDetail" form-validation="empty" style="width:322px;"></textarea>
+                 </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">移动短信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="packFormData.mobileSmsValue" />
+                   </div>
+             </li>             
+             <li class="clearfix">
+                   <label class="alert-bd-label">联通短信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="packFormData.unicomSmsValue" />
+                   </div>
+             </li>
+             
+             <li class="clearfix">
+                   <label class="alert-bd-label">电信短信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="packFormData.telcomSmsValue" />
+                   </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">移动彩信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="packFormData.mobileMmsValue" />
+                   </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">联通彩信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="packFormData.unicomMmsValue" />
+                   </div>
+             </li>
+             <li class="clearfix">
+                   <label class="alert-bd-label">电信彩信：</label>
+                   <div class="label-con">
+                      <input type="number" placeholder="" class="input" ng-model="packFormData.telcomMmsValues" />
+                   </div>
+             </li>
+         </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-if="actionType=='add'" ng-disabled="editPackForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal Pack编辑 End-->
+
+<!-- Modal Access编辑 -->
+<div id="editAccessModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <form name="editAccessForm" ng-submit="submitAccessForm(editAccessForm.$valid, accessFormData)">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>{{actionType == 'add' ? "新建": "查看"}}接入IP信息</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert-bd create-user">
+         <ul>
+             <li class="clearfix">
+                 <label class="alert-bd-label">公司名称：</label>
+                 <div class="label-con">
+                    <div select-custom="" ng-model="accessCompany" select-title="=所属公司=" select-items="companyListForm" form-validation="emptySC"></div>
+                 </div>
+             </li>   
+             <li class="clearfix">
+                   <label class="alert-bd-label">IP&nbsp;&nbsp;地&nbsp;&nbsp;址：</label>
+                   <div class="label-con">
+                      <input type="text" placeholder="" class="input" ng-model="accessFormData.ipAddress" form-validation="empty ip" />
+                   </div>
+             </li>
+         </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-lblue" data-dismiss="modal" aria-hidden="true">关闭</button>
+      <button type="submit" class="btn-dblue" ng-if="actionType=='add'" ng-disabled="editAccessForm.$invalid">保存</button>
+    </div>
+  </form>
+</div>
+<!-- Modal Pack编辑 End-->

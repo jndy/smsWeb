@@ -1,0 +1,12 @@
+<ul class="sitenav sitenav-sys clearfix">
+     <li ng-class="{current: navCurrent == 'userInfo'}"><a href="#/sys/userInfo">个人管理</a></li>
+     <li has-permission='USER_MANAGEMENT' ng-class="{current: navCurrent == 'userList'}"><a href="#/sys/userList">用户管理</a></li>
+     <li has-permission='ROLE_MANAGEMENT' ng-class="{current: navCurrent == 'userRole'}"><a href="#/sys/userRole">角色权限</a></li>
+     <li has-permission='TASK_MANAGEMENT' ng-class="{current: navCurrent == 'taskList'}"><a href="#/sys/taskList">任务管理</a></li>     
+     <li has-permission='LOG_MANAGEMENT' ng-class="{current: navCurrent == 'logList'}"><a href="#/sys/logList">日志管理</a></li>
+     <li has-permission='SYS_CONFIG' ng-class="{current: navCurrent == 'sysConfig'}"><a href="#/sys/sysConfig">系统配置</a></li>
+     <li has-permission='MONITORING_MANAGEMENT' ng-class="{current: navCurrent == 'sysMonitor'}"><a href="#/sys/sysMonitor">监控管理</a></li>
+     <li has-permission='PIPE_MANAGEMENT' ng-class="{current: navCurrent == 'pipeConfig'}"><a href="#/sys/pipeConfig">通道管理</a></li>
+     <li has-permission='NOTICE_MANAGEMENT' ng-class="{current: navCurrent == 'noticeList'}"><a href="#/sys/noticeList">公告管理</a></li>
+     <li has-permission='BLACK_MANAGEMENT' ng-class="{current: navCurrent == 'blackList'}"><a href="#/sys/blackList">黑名单</a></li>
+ </ul>

@@ -1,0 +1,13 @@
+<div ng-include="'views/sys/sysNav.html'"></div>
+
+<div class="container">
+    <div class="tab-channel">
+        <a href="javascript:;" ng-class="(configType == 1) ? 'current' : ''" ng-click="tabCurrent(1)">移动</a><a href="javascript:;" ng-class="(configType == 2) ? 'current' : ''" ng-click="tabCurrent(2)">联通</a><a href="javascript:;" ng-class="(configType == 3) ? 'current' : ''" ng-click="tabCurrent(3)">电信</a>
+    </div>
+    <div class="fill-channel">
+        <ul>
+            <li ng-repeat="item in configList track by $index"><label for="{{item.configName}}">{{item.configDesc}}：</label><input type="text" ng-model="item.configValue" name="{{item.configName}}" /></li>
+        </ul>
+        <div class="btn-channer hide"> <a href="javascript:;" class="btn-dblue" ng-click="saveConfig(configList);">保存</a></div>
+    </div>
+</div>
